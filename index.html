@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title> World</title>
+</head>
+
+<body>
+
+    <h1> WORLD</h1>
+
+    <div>
+
+        <h2>Join World</h2>
+        <p>Enter your details to join.</p>
+
+        <form id="Form">
+
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+
+            <br><br>
+
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Enter your email" required>
+
+            <br><br>
+
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="Enter phone number"
+                   pattern="[0-9]{10}" maxlength="10" required>
+
+            <br><br>
+
+            <button type="submit" id="submitButton">Submit</button>
+
+        </form>
+
+        <p id="formMessage"></p>
+
+    </div>
+
+    <footer>
+        <p>© 2026</p>
+    </footer>
+
+    <script>
+
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1jY5xPaAXPywDdA1BDOxffXiitpuYhvZbha7d_f3Maeh2I687DueX6z5prQFfqv_6/exec";
+
+        document.getElementById("Form").addEventListener("submit", function(e) {
+
+            e.preventDefault();
+
+            let form = this;
+            let message = document.getElementById("formMessage");
+            let button = document.getElementById("submitButton");
+
+            button.disabled = true;
+            button.innerText = "Submitting...";
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                body: new URLSearchParams(new FormData(form))
+            })
+            .then(function() {
+                message.innerText = "Form submitted successfully!";
+                message.style.color = "green";
+                form.reset();
+            })
+            .catch(function() {
+                message.innerText = "Something went wrong!";
+                message.style.color = "red";
+            })
+            .finally(function() {
+                button.disabled = false;
+                button.innerText = "Submit";
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
